@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/monthlyreport.css" />
+</head>
+<body>
+    <nav>
+        
+
+
+    </nav>
+
+   
+
+   
+   
+    
+    <form  method="POST" action="/monthlyreport">
+        <%= name %>  Generation of Your monthly Report;<br>
+        Filter<br>
+        <label for="month">Month</label><br>
+        <input type="number"  name="month"><br>
+        <label for="year">Year:</label><br>
+        <input type="number"  name="year">
+
+
+        
+        <input type="submit" value="Submit">
+    
+    </form>
+   
+ 
+    
+    <h4>   Year: <%= y %> </h4>
+    <h5>  Month: <%= month %>  </h3>
+
+        <h6><%= active %>  </h6>
+        <h7><%= passive %> </h7>
+        <h8><%= badhours %> </h8>
+        
+
+        
+
+
+   
+
+    <h1 id="csv" ><%= csv %></h1>
+    <h2 id="header"><%= header %></h2>
+    <h3 id="maincontent"><%= bodyoftable %></h3>
+
+    Genrate exile file:
+    
+    <a download="monthlyreport.xls" href="#" onclick="return ExcellentExport.excel(this, 'mytable', `Monthly Gold Soul Report Month`);">Export to Excel</a>
+    <table id="mytable" class="styled-table">
+        <!-- here goes our data! -->
+
+    </table>
+  
+    
+</body>
+
+<script>
+
+   
+     
+
+    var csv= document.getElementById('csv')
+    var header= document.getElementById('header')
+    var maincontent= document.getElementById('maincontent')
+    console.log(csv )
+
+   
+
+    
+    
+
+    
+
+   
+    var newheader =JSON.parse(`${header.innerText}`);
+    var newcontent =JSON.parse(`${maincontent.innerText}`);
+  
+    var table = document.getElementById("mytable")
+    var header = document.createElement('tr')
+    header.setAttribute("id","header")
+    header.classList.add("sticky")
+    for(i=0;i<newheader.length;i++){
+      var c=  document.createElement("th")
+      c.innerText=newheader[i]
+      header.append(c)
+    }
+    
+    table.append(header)
+    console.log(newcontent.length)
+    //append all the rows first
+    for (i=0;i<newcontent.length;i++){
+        var a = document.createElement('tr')
+        //create th element 
+        for(j=0;j<newcontent[i].length;j++){
+            var b = document.createElement('th')
+           
+            b.innerText= JSON.stringify(newcontent[i][j])
+            var cc= newcontent[i][j]
+
+            if(b.innerText=="null"){
+                
+                b.innerText="_"
+                b.classList.add("contentempty")
+                a.append(b)
+
+            }
+            else if(j==0){
+                b.classList.add("contentempty")
+                a.append(b)
+
+
+            }
+            else{
+                b.classList.add("contentmod")
+                a.append(b)
+                
+            }
+            
+           
+
+         
+
+            
+
+           
+
+        }
+    
+        
+    
+    table.append(a)
+    }
+   
+
+    //contruct a table 
+
+    // after the table wait for a couple seconds:
+    var oldmodlist= document.getElementsByClassName("contentmod")
+    console.log(oldmodlist)
+    var collectionlist=[]
+    for (item of oldmodlist) {
+        collectionlist.push(item
+        )
+        }
+        console.log(collectionlist)
+        newcollectionlist=[]
+
+        for(i=0;i<collectionlist.length;i++){
+            newcollectionlist.push( JSON.parse(`${collectionlist[i].innerText}`))
+
+        }
+        console.log(newcollectionlist)
+
+    
+        for(i=0;i<oldmodlist.length;i++){
+            console.log(item.index)
+            a= document.createElement("div")
+
+            if(newcollectionlist[i].outcomegen=="active engagement"){
+                //set color to green ;
+                oldmodlist[i].classList.add("green")
+            }
+            if(newcollectionlist[i].outcomegen=="pasive engagement"){
+                //set color to green ;
+                oldmodlist[i].classList.add("orange")
+            }
+            if(newcollectionlist[i].outcomegen=="nil"){
+                //set color to green ;
+                oldmodlist[i].classList.add("red")
+            }
+
+
+            //////////////////////////////
+
+            a.innerHTML=
+            ` 
+            
+            <div class="accordion">
+
+                <strong> <p> Activity Genre:<br> ${newcollectionlist[i].activitygen}</p></strong><br>
+
+                <strong> <p>Outcome Genre:<br>${newcollectionlist[i].outcomegen}</p></strong><br>
+
+               
+                
+                
+                
+            </div>
+          
+
+
+             <div class="panel">
+                <strong> <p>Duration:<br>${newcollectionlist[i].Duration}</p></strong><br>
+
+            <p>Activity Description:<br> ${newcollectionlist[i].activitydes}</p>
+                       
+            <p>Outcome description:${newcollectionlist[i].outcomedes}</p>
+                
+            </div>
+            
+            
+                        
+            `
+            
+
+          
+            oldmodlist[i].innerHTML= a.innerHTML
+
+
+        }
+
+        //get accordian 
+        var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+           
+            
+        
+        
+
+        
+
+    
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/excellentexport@3.4.3/dist/excellentexport.min.js"></script>
+
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1><%= user.username %></h1> are logged in
+    
+    
+    <a href="/protected-route2"> generate a report </a>
+    <a href="/protected-route"> generate a report </a>
+
+    
+    
+
+    
+  
+
+</body>
+<script>
+
+
+    function myFunction(){
+        document.location.href = `/${user.username}/loghours`
+    }
+</script>
+</html>
