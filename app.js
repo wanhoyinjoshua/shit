@@ -73,6 +73,8 @@ app.set('view engine', 'ejs');
 
 require('./config/passport')
 
+app.get("/",(req,res,next)=>{res.render("welcome")})
+
 //the engine already get it
 app.get("/login",(req,res,next)=>{res.render('index')})
 
