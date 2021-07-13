@@ -9,7 +9,7 @@ const mongoose = require ('mongoose')
 var session = require('express-session');
 var routes_monthlyreport = require('./routes/monthlyreport');
 var routes_loghours = require('./routes/loghours');
-const isAuth = require('./routes/authMiddleware').isAuth;
+const isAuth = require('./routes/authmiddleware').isAuth;
 
 const genPassword = require('./lib/passwordUtils').genPassword;
 const connection = require('./config/database');
