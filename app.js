@@ -1,7 +1,7 @@
 const express= require ("express");
 
 var passport = require ('passport')
-const isAuth = require('./routes/authMiddleware').isAuth;
+
 const port = process.env.PORT||3000;
 
 
@@ -9,6 +9,7 @@ const mongoose = require ('mongoose')
 var session = require('express-session');
 var routes_monthlyreport = require('./routes/monthlyreport');
 var routes_loghours = require('./routes/loghours');
+const isAuth = require('./routes/authMiddleware').isAuth;
 
 const genPassword = require('./lib/passwordUtils').genPassword;
 const connection = require('./config/database');
