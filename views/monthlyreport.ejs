@@ -9,6 +9,8 @@
 </head>
 <body>
     <nav>
+
+        <%- include ('partials/logout') -%>
         
 
 
@@ -64,7 +66,9 @@
 </body>
 
 <script>
-
+    function logout(){
+        document.location.href = "/logout"
+    }
    
      
 

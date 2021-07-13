@@ -5,14 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://use.fontawesome.com/8fa1c275e2.js"></script>
 </head>
+<style>
+.nodisplay{display:none}
+.spaced{margin-bottom: 100px;}
+.customLabel {
+  width: 500px;
+  
+  font-size: 0.9em;
+  font-weight: bold;
+  margin: 0 auto   ;
+  
+ 
+  overflow: hidden;
+}
+.customLabel>div {
+  background: #f0ad4e;
+  margin-bottom: 5px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  float: left;
+  clear: both;
+  display: flex;
+  justify-content: center;
+}
+
+</style>
 <body>
     
-    <h1><%= user.username %></h1> are logged in
+    <%- include ('partials/logout') -%>
+
+    This is your loginhomepage.
+
+   <h1 class="nodisplay"id="recentlog"><%= data1 %> </h1> 
+   <div class="customLabel" id="domdata"></div>
     
     
-    <a href="/protected-route2"> generate a report </a>
-    <a href="/protected-route"> generate a report </a>
+    
+   
 
     
     
@@ -27,5 +58,39 @@
     function myFunction(){
         document.location.href = `/${user.username}/loghours`
     }
+
+    function logout(){
+        document.location.href = "/logout"
+    }
+
+    var recentlogs= document.getElementById("recentlog");
+    var recentloginnertext= recentlogs.innerText
+    var recentlogjson= JSON.parse(recentloginnertext)
+    console.log(recentlogjson)
+    for(i=0;i<recentlogjson.length;i++){
+        var a = document.createElement("div");
+        
+        a.classList.add("fa")
+        a.classList.add("fa-trash")
+        a.classList.add("spaced") 
+        a.innerHTML= 
+        `<br>
+        
+        ${recentlogjson[i]._id}<br>
+       ${recentlogjson[i].Duration} <br>
+       ${recentlogjson[i].activitydes} <br>
+       ${recentlogjson[i].activitygen} <br>
+        ${recentlogjson[i].fulldate} <br>
+        ${recentlogjson[i].outcomegen} <br>
+        ${recentlogjson[i].resident} <br>
+        
+        <br>
+        
+        `
+        var domdata1 = document.getElementById("domdata")
+       
+        domdata1.append(a)
+    }
+  
 </script>
 </html>

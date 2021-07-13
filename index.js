@@ -2,6 +2,7 @@ const express= require ("express");
 
 var passport = require ('passport')
 const isAuth = require('./routes/authMiddleware').isAuth;
+const port = process.env.PORT||3000;
 
 
 const mongoose = require ('mongoose')
@@ -74,14 +75,49 @@ app.get("/login",(req,res,next)=>{res.render('index')})
 app.get('/logout', (req, res, next) => {
     req.logout();
     
-    res.redirect('/');
-});
-app.get('/login-success/:id', isAuth, (req, res, next) => {
     
-    res.render('loggedin',{user:req.user})
+    res.redirect('/login');
+});
+app.get('/homepage', isAuth, (req, res, next) => {
+
+
+
+    Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:["7"]},year:{$all : ["2021"]}})
+    //might be able to sort them in order...
+    .lean()
+    
+    .limit(20)
+    .select('-_v')
+    .sort({Date: 'asc'})
+    .exec((error,data)=>{
+
+      res.render('loggedin',{data1:JSON.stringify(data)})
+
+
+
+    })
+
+
+
+    
+      //
+
+
+ 
+
+
+
+
+  
+
+
+
+
+    
+   
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure' }),function(req,res){res.redirect('/login-success/' + req.user.username);});
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure' }),function(req,res){res.redirect('/homepage');});
 
 app.get("/register",(req,res,next)=>{res.render('register')})
 app.post('/register', (req, res, next) => {
@@ -94,7 +130,8 @@ app.post('/register', (req, res, next) => {
         username: req.body.uname,
         hash: hash,
         salt: salt,
-        admin: true
+        admin: true,
+        Facility:req.body.facilityrole
     });
 
     newUser.save()
@@ -106,4 +143,4 @@ app.post('/register', (req, res, next) => {
  });
 
 
-app.listen(PORT,()=>console.log("lsitening on port 3000"))
+app.listen(port,()=>console.log("lsitening on port 3000"))

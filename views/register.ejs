@@ -8,10 +8,23 @@
 </head>
 <body>
 
-    <h1>Register Page</h1><form method="post" action="register">\
-        Enter Username:<br><input type="text" name="uname">\
-        <br>Enter Password:<br><input type="password" name="pw">\
-        <br><br><input type="submit" value="Submit"></form>'
+    <h1>Register Page</h1><form method="post" action="register">
+        Enter Username:<br><input type="text" name="uname">
+        <br>Enter Password:<br><input type="password" >
+        <br>
+        Confirm your password:<br>
+        <input type="password" name="pw">
+        <br>
+        
+        <label for="cars">Which facility are you from?</label>
+        <select id="cars" name="facilityrole">
+        <option value="Scalabrini">Scalabrini</option>
+        <option value="Ryde">Ryde</option>
+      
+        </select>
+        
+        
+        <br><input type="submit" value="Submit"></form>'
       
       <a href="/"> login</a>
 </body>

@@ -1,0 +1,55 @@
+<form id ="group-loghourform"autocomplete="off" method="POST" action="/protected-route">
+
+     
+
+    <p id="group-residentword">Resident Group activities</p>:<br>
+    
+    
+      <input  type="text" id="residentnamefieldgroup"name="residentname" value="Group_activities">
+    
+      <div class="autocomplete" style="width:300px;">
+    <input id="groupauto"  type="text" placeholder="search your residents and select">
+    </div>
+    <div id="clicktoaddgroup"> click to add resident</div>
+    <div id="residentgroupdom">
+        
+    </div>
+    <br>
+    <label for="activity_genre">Activity_Genre:</label>
+    <select id="group-cars" name="activity_genre">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="fiat">Fiat</option>
+      <option value="audi">Audi</option>
+    </select>
+    <br>
+    Activity Description:<br>
+    <input type="text" name="activity_description">
+    <br>
+    <label for="outcome_genre">Outcome_Genre:</label>
+    <select id="group-cars" name="outcome_genre">
+      <option value="active engagement">active engagement</option>
+      <option value="pasive engagement">pasive engagement</option>
+      <option value="nil">nil</option>
+    
+    </select>
+    <br>
+    Outcome Description<br>
+    <input type="text" name="outcome_description"><br>
+    <br>
+    Duration<br>
+    <input type="number" name="Duration"><br>
+    <br>
+    Date<br>
+    <input type="date" name="date"><br>
+    <br>
+ 
+    <input class="nodisplay"type="text" value=<%= user._id %> name="Personresponsible"><br>
+    <br>
+    
+   
+    <input class="nodisplay" id="group-resident_id"type="text"  name="residentid"><br>
+    <br>
+    
+
+</form>

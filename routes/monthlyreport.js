@@ -121,9 +121,22 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[m]},year:{$a
         }
 
         let uniqueresident = [...new Set(residentlist)];
+        //take out group activites
+        const groupactivityindex = uniqueresident.indexOf("Group_activities");
+        
+        if (groupactivityindex > -1) {
+            uniqueresident.splice(groupactivityindex, 1);
+        }
+
+        const adminactivityindex = uniqueresident.indexOf("Admin");
+        if (adminactivityindex > -1) {
+            uniqueresident.splice(adminactivityindex, 1);
+        }
+
+        
         let uniquetimelist = [...new Set(timelist)];
         console.log(uniqueresident)
-        uniqueresident.unshift("Date","Admin","Group activites")
+        uniqueresident.unshift("Date","Admin","Group_activities")
         console.log(uniqueresident)
         console.log(uniquetimelist)
         //have uniqueresident and timelist and data(list of objects)
@@ -278,11 +291,28 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
         let uniqueresident = [...new Set(residentlist)];
         let uniquetimelist = [...new Set(timelist)];
         console.log(uniqueresident)
-        uniqueresident.unshift("Date","Admin","Group activites")
+
+        const groupactivityindex = uniqueresident.indexOf("Group_activities");
+        
+        if (groupactivityindex > -1) {
+            uniqueresident.splice(groupactivityindex, 1);
+        }
+
+        const adminactivityindex = uniqueresident.indexOf("Admin");
+        if (adminactivityindex > -1) {
+            uniqueresident.splice(adminactivityindex, 1);
+        }
+
+
+
+        ///////////////////////
+        uniqueresident.unshift("Date","Admin","Group_activities")
         console.log(uniqueresident)
         console.log(uniquetimelist)
         //have uniqueresident and timelist and data(list of objects)
         //now generate a list of lists [[one row],[next row]]
+
+        
         var maincontent=[]
         
        

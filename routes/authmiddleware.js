@@ -13,3 +13,19 @@ module.exports.isAdmin = (req, res, next) => {
         res.status(401).json({ msg: 'You are not authorized to view this resource because you are not an admin.' });
     }
 }
+
+module.exports.isRyde = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.Facility=="Ryde") {
+        next();
+    } else {
+        res.status(401).json({ msg: 'You are not authorized to view this resource because you are not an admin.' });
+    }
+}
+
+module.exports.isScalabrinni = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.Facility=="Scalabrini") {
+        next();
+    } else {
+        res.status(401).json({ msg: 'You are not authorized to view this resource because you are not an admin.' });
+    }
+}

@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 require('dotenv').config();
@@ -32,7 +33,42 @@ const UserSchema = new mongoose.Schema({
 });
 
 
-const ResidentList = connection.model('ResidentList', UserSchema);
+const ResidentList = connection.model('user', UserSchema);
 
 // Expose the connection
 module.exports = connection;
+
+
+
+
+
+
+
+
+
+
+
+
+
+ function createNewResident(name,facility,interest,avoid){
+
+        //generate unique id 
+        let uniqueid= name.concat(`_${facility}`)
+
+
+
+        const newresident = new Resident({
+            _id: unniqueid,
+            residentname: name,
+        residentfacility: facility,
+        residentinterest: interest,
+        residentavoid: avoid,
+        });
+
+        newresident.save()
+        .then((user) => {
+            console.log(user);
+        });
+
+    }
+    

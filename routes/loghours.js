@@ -116,7 +116,7 @@ router.post('/protected-route',isAuth,(req,res,next)=>{
         });
 
 
-    res.redirect(`/login-success/${req.user.username}`);
+    res.redirect(`/homepage`);
 })
 
  

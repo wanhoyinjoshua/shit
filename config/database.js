@@ -26,7 +26,8 @@ const UserSchema = new mongoose.Schema({
     recentlog:Array,
     hash: String,
     salt: String,
-    admin: Boolean
+    admin: Boolean,
+    Facility:String
 });
 
 
