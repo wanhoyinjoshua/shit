@@ -10,8 +10,8 @@ const Useractivity = connectionactivity.models.Useractivity;
 
 const connectionresident = require('../config/residentlist');
 const Resident = connectionresident.models.ResidentList;
-const isAuth = require('./authMiddleware').isAuth;
-const isAdmin = require('./authMiddleware').isAdmin;
+const isAuth = require('./authmiddleware').isAuth;
+const isAdmin = require('./authmiddleware').isAdmin;
 
 /**
  * -------------- POST ROUTES ----------------

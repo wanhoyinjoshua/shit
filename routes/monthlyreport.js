@@ -9,8 +9,8 @@ const Useractivity = connectionactivity.models.Useractivity;
 
 const connectionresident = require('../config/residentlist');
 const Resident = connectionresident.models.ResidentList;
-const isAuth = require('./authMiddleware').isAuth;
-const isAdmin = require('./authMiddleware').isAdmin;
+const isAuth = require('./authmiddleware').isAuth;
+const isAdmin = require('./authmiddleware').isAdmin;
 
 const genPassword = require('../lib/passwordUtils').genPassword;
 const { convertArrayToCSV } = require('convert-array-to-csv');
@@ -22,29 +22,7 @@ const converter = require('convert-array-to-csv');
 
  router.get('/protected-route2',isAuth, (req, res, next) => {
     
-  /*  function createNewResident(name,facility,interest,avoid){
-
-        //generate unique id 
-        let uniqueid= name.concat(`_${facility}`)
-
-
-
-        const newresident = new Resident({
-            _id: unniqueid,
-            residentname: name,
-        residentfacility: facility,
-        residentinterest: interest,
-        residentavoid: avoid,
-        });
-
-        newresident.save()
-        .then((user) => {
-            console.log(user);
-        });
-
-    }
-    
-*/
+  
 var month = new Array();
 month[0] = "January";
 month[1] = "February";
