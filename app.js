@@ -150,4 +150,4 @@ app.post('/register', (req, res, next) => {
  });
 
 
-app.listen(port,()=>console.log("lsitening on port 3000"))
+app.listen(process.env.PORT||3000,()=>console.log("lsitening on port 3000"))
