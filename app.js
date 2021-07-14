@@ -125,7 +125,7 @@ app.get('/homepage', isAuth, (req, res, next) => {
    
 });
 
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure' }),function(req,res){res.redirect('/homepage');});
+app.post('/login', passport.authenticate('local', { failureRedirect: '/errorpage' }),function(req,res){res.redirect('/homepage');});
 
 app.get("/register",(req,res,next)=>{res.render('register')})
 app.post('/register', (req, res, next) => {

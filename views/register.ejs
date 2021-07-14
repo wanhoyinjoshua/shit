@@ -6,15 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<script src="https://use.fontawesome.com/8fa1c275e2.js"></script>
 <body>
 
-    <h1>Register Page</h1><form method="post" action="register">
+    <h1>Register Page</h1>
+    
+        <br>
+    <form id="registerform"method="post" action="register">
         Enter Username:<br><input type="text" name="uname">
-        <br>Enter Password:<br><input type="password" >
+        <br>Enter Password:<br><input id="firstpassword"type="password" >
         <br>
         Confirm your password:<br>
-        <input type="password" name="pw">
-        <br>
+        <input id="checkpassword"type="password" name="pw">
         
         <label for="cars">Which facility are you from?</label>
         <select id="cars" name="facilityrole">
@@ -24,8 +27,52 @@
         </select>
         
         
-        <br><input type="submit" value="Submit"></form>'
+        
+    </form>
+    <button style="background-color: rgb(185,205,224); color: azure;" id="registerbutton" onclick="submitregister()">register now</button>
       
       <a href="/"> login</a>
 </body>
+<script>
+
+const firstpassword = document.getElementById('firstpassword');
+const secondpassword = document.getElementById('checkpassword');
+console.log(secondpassword.innerText)
+document.getElementById("registerbutton").disabled=true
+
+
+
+secondpassword.addEventListener('keyup', (e)=>{
+    
+   console.log(secondpassword.value.localeCompare(firstpassword.value)) 
+   if(secondpassword.value.localeCompare(firstpassword.value)==0){
+       //password match set color to green 
+       
+       var status= document.getElementById("registerbutton")
+       status.style.backgroundColor="rgb(34,139,230)"
+       document.getElementById("registerbutton").disabled=false
+       
+
+      
+   }
+   else{
+       //set color to red 
+       var status= document.getElementById("registerbutton")
+       status.style.backgroundColor="rgb(185,205,224)"
+      
+       
+   }
+
+
+});
+
+
+function submitregister(){
+    var registerbutt= document.getElementById("registerbutton");
+    var form = document.getElementById("registerform")
+    form.submit();
+    
+
+}
+</script>
 </html>
