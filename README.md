@@ -3,13 +3,7 @@
 "# goldsoul-v3" 
 "# shit" 
 \
-//notes for 7/16/2021
-for logginh hours, if there is more than 1 activity for one resident per day.
-how to solve this, by making actuvuty genre a list, rather than a value....
-so when searchiung can just search the index of the list a=then map it with the description list...
-
-if i serach by category....
-searched up a docuemnt with more thna 1 activity , then i do a if statement, then know 
-which index is my desired activity, then find the index on the a=detials array...
-
-//what if i get the class....
+//notes forlater
+//work on register double username 
+//which facility do they belong no blank option for ryde 
+ryde students cant track residrnts 
