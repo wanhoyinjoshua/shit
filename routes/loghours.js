@@ -25,12 +25,12 @@ const isAdmin = require('./authmiddleware').isAdmin;
 async function getresident(){
 
      
-    await Resident.find({}, '_id residentname', function (err, docs) {
+    await Resident.find({organization: req.user.Facility}, '_id residentname', function (err, docs) {
 
         
         
         
-
+        console.log(docs)
           docskeyvalue= JSON.stringify(docs)
 
           
