@@ -5,27 +5,20 @@
     <p id="group-residentword">Admin activities</p>:<br>
     
     
-      <input id="admin-myInput" type="text" name="residentname" value="Admin">
+      <input id="admin-myInput" type="text" name="residentname" value="Admin" required="required">
     
     <br>
     <label for="activity_genre">Activity_Genre:</label>
-    <select id="group-cars" name="activity_genre">
-      <option value="volvo">Volvo</option>
-      <option value="saab">Saab</option>
-      <option value="fiat">Fiat</option>
-      <option value="audi">Audi</option>
-      <option value="audi">Admin</option>
-      <option value="audi">Group</option>
+    <select id="group-cars" name="activity_genre" required="required">
+      <%- include ('activitygenre') -%>
     </select>
     <br>
     Activity Description:<br>
-    <input type="text" name="activity_description">
+    <input type="text" name="activity_description" required="required">
     <br>
     <label for="outcome_genre">Outcome_Genre:</label>
     <select id="group-cars" name="outcome_genre">
-      <option value="active engagement">active engagement</option>
-      <option value="pasive engagement">pasive engagement</option>
-      <option value="nil">nil</option>
+      <%- include ('outcomegenre') -%>
     
     </select>
     <br>
@@ -35,6 +28,8 @@
     Duration<br>
     <input type="number" name="Duration"><br>
     <br>
+    Roughly at what time did you start?(in 24 hour format)<br>
+        <input type="number" name="starttime"><br>
     Date<br>
     <input type="date" name="date"><br>
     <br>

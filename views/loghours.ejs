@@ -32,42 +32,40 @@
         <p id="residentword">Resident</p>:<br>
         
         <div class="autocomplete" style="width:300px;">
-          <input id="myInput" type="text" name="residentname" placeholder="ResidentName">
+          <input id="myInput" type="text" name="residentname" placeholder="ResidentName" required />
         </div>
         <br>
         <label for="activity_genre">Activity_Genre:</label>
-        <select id="cars" name="activity_genre">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="fiat">Fiat</option>
-          <option value="audi">Audi</option>
+        <select id="cars" name="activity_genre" required="required">
+          <%- include ('partials/activitygenre') -%>
         </select>
         <br>
         Activity Description:<br>
-        <input type="text" name="activity_description">
+        <input type="text" name="activity_description" required>
         <br>
         <label for="outcome_genre">Outcome_Genre:</label>
-        <select id="cars" name="outcome_genre">
-          <option value="active engagement">active engagement</option>
-          <option value="pasive engagement">pasive engagement</option>
-          <option value="nil">nil</option>
+        <select id="cars" name="outcome_genre" required>
+         
+          <%- include ('partials/outcomegenre') -%>
         
         </select>
         <br>
         Outcome Description<br>
-        <input type="text" name="outcome_description"><br>
+        <input type="text" name="outcome_description" required><br>
         <br>
         Duration<br>
-        <input type="number" name="Duration"><br>
+        <input type="number" name="Duration" required><br>
+      Roughly at what time did you start?(in 24 hour format)<br>
+        <input type="number" name="starttime" required>
         <br>
         Date<br>
-        <input type="date" name="date"><br>
+        <input type="date" name="date" required><br>
         <br>
  
-        <input class="nodisplay" type="text" value=<%= user._id %> name="Personresponsible"><br>
+        <input class="nodisplay" type="text" value=<%= user._id %> name="Personresponsible" required><br>
         <br>
        
-        <input  class="nodisplay" id="resident_id"type="text"  name="residentid"><br>
+        <input  class="nodisplay" id="resident_id"type="text"  name="residentid" required><br>
         <br>
         
     
@@ -80,6 +78,7 @@
 </body>
 
 <script>
+  
 
   function logout(){
         document.location.href = "/logout"
@@ -123,7 +122,11 @@
   form=document.getElementById("loghourform")
 
   if(formresidentid.value!=null){
-    form.submit();
+    var singlebutton= document.createElement("button")
+    singlebutton.classList.add("noopacity")
+    form.append(singlebutton)
+    singlebutton.click()
+    
 
   }
   else{
@@ -373,8 +376,12 @@ function getresidentdomlist(){
   getresidentdomlist()
   //submit the form 
   var submitgroupform= document.getElementById("group-loghourform")
+  var singlebutton= document.createElement("button")
+    singlebutton.classList.add("noopacity")
+    submitgroupform.append(singlebutton)
+    singlebutton.click()
 
-  submitgroupform.submit();
+  
   
 
 
@@ -387,7 +394,12 @@ function checkresidentduplicate(){
 function submitformadminform(){
   var submitadminform= document.getElementById("admin-loghourform")
 
-  submitadminform.submit();
+  var singlebutton= document.createElement("button")
+    singlebutton.classList.add("noopacity")
+    submitadminform.append(singlebutton)
+    singlebutton.click()
+
+  
 
 }
 

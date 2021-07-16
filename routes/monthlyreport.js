@@ -123,38 +123,69 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[m]},year:{$a
         
        
      
-      for(i=0;i<uniquetimelist.length;i++){
-          var subrow=[]
-          subrow.push(uniquetimelist[i])
-          for(j=1;j<uniqueresident.length;j++){
-
-            var newArray = data.filter(function (el) {
-                return el.resident == uniqueresident[j] &&
-                       el.fulldate == uniquetimelist[i] 
-              });
-            console.log(JSON. stringify(newArray[0]))
-            subrow.push(newArray[0])
-           
-
-           
-            }
-            maincontent.push(subrow)
-              //declare fucntion
-
+        for(i=0;i<uniquetimelist.length;i++){
+            var subrow=[]
+            
+            subrow.push(uniquetimelist[i])
+            for(j=1;j<uniqueresident.length;j++){
+                console.log(data)
+  
+              var newArray = data.filter(function (el) {
+                  return el.resident == uniqueresident[j] &&
+                         el.fulldate == uniquetimelist[i] 
+                });
+                //should do sth here....
+                //if newarray>1 then joint them together.....so i can disply them together..
+                console.log(newArray)
+                if(newArray.length==1){
+  
+                  console.log("i am here bitch")
+                  console.log(newArray)
+  
+                  subrow.push(newArray[0])
+                   
+                   
+                }
+                
+                else{
+                 
+  
+                  var temparray=[]
+                  for(k=0;k<newArray.length;k++){
+                      var temptemparray =[]
+                      temptemparray.push(k)
+                    temptemparray.push(newArray[k])
+                    temparray.push(temptemparray)
+                  }
+                  const obj = Object.fromEntries(temparray);
+                  
+                  
+                  subrow.push(obj)
+  
+  
+                }
              
-
-              
-              
-           
              
+  
              
+              }
+              maincontent.push(subrow)
+                //declare fucntion
+  
+               
+  
+                
+                
              
-          
-
-          
-
-
-      }
+               
+               
+               
+            
+  
+            
+  
+  
+        }
 
         console.log(maincontent)
         //have uniqueresident and timelist and data(list of objects)
@@ -227,6 +258,8 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
         var passivehours=0
         var badoutcome=0
 
+        console.log(data)
+
 
         for (i=0;i<data.length;i++){
 
@@ -248,7 +281,7 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
            
         }
 
-        console.log(data)
+        
         var timelist= []
         for (i=0;i<data.length;i++){
 
@@ -297,15 +330,46 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
      
       for(i=0;i<uniquetimelist.length;i++){
           var subrow=[]
+          
           subrow.push(uniquetimelist[i])
           for(j=1;j<uniqueresident.length;j++){
+              console.log(data)
 
             var newArray = data.filter(function (el) {
                 return el.resident == uniqueresident[j] &&
                        el.fulldate == uniquetimelist[i] 
               });
-            console.log(JSON. stringify(newArray[0]))
-            subrow.push(newArray[0])
+              //should do sth here....
+              //if newarray>1 then joint them together.....so i can disply them together..
+              console.log(newArray)
+              if(newArray.length==1){
+
+                console.log("i am here bitch")
+                console.log(newArray)
+
+                subrow.push(newArray[0])
+                 
+                 
+              }
+              
+              else{
+               
+
+                var temparray=[]
+                for(k=0;k<newArray.length;k++){
+                    var temptemparray =[]
+                    temptemparray.push(k)
+                  temptemparray.push(newArray[k])
+                  temparray.push(temptemparray)
+                }
+                const obj = Object.fromEntries(temparray);
+                
+                
+                subrow.push(obj)
+
+
+              }
+           
            
 
            

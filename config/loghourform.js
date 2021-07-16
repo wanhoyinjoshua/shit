@@ -28,12 +28,13 @@ const UserSchema = new mongoose.Schema({
     outcomedes: String,
     resident:String,
     Duration:Number,
+    starttime:Number,
     year:Number,
     month:Number,
     Date:Number,
     fulldate:String,
     personresponsible:String,
-    resident_id:String,
+    resident_id:Array,
    _id:String
    
 });

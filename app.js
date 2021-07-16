@@ -9,6 +9,9 @@ const mongoose = require ('mongoose')
 var session = require('express-session');
 var routes_monthlyreport = require('./routes/monthlyreport');
 var routes_loghours = require('./routes/loghours');
+var routes_deleteuserlog= require('./routes/deleteuserlog');
+var routes_residentprofile= require('./routes/residentprofile');
+var routes_addresidentprofile= require('./routes/addresident');
 const isAuth = require('./routes/authmiddleware').isAuth;
 
 const genPassword = require('./lib/passwordUtils').genPassword;
@@ -63,6 +66,9 @@ app.use((req, res, next) => {
 });
 app.use(routes_monthlyreport);
 app.use(routes_loghours);
+app.use(routes_deleteuserlog);
+app.use(routes_residentprofile);
+app.use(routes_addresidentprofile)
 
 const PORT = process.env.PORT||3000
 require ('dotenv').config();
@@ -98,6 +104,7 @@ app.get('/homepage', isAuth, (req, res, next) => {
     .select('-_v')
     .sort({Date: 'asc'})
     .exec((error,data)=>{
+      
 
       res.render('loggedin',{data1:JSON.stringify(data)})
 

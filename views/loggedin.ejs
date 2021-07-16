@@ -9,6 +9,7 @@
 </head>
 <style>
 .nodisplay{display:none}
+.noshow{opacity: 0;}
 .spaced{margin-bottom: 100px;}
 .customLabel {
   width: 500px;
@@ -20,6 +21,10 @@
  
   overflow: hidden;
 }
+.hover :hover{
+    background-color: red !important;
+    cursor: pointer;
+}
 .customLabel>div {
   background: #f0ad4e;
   margin-bottom: 5px;
@@ -30,6 +35,8 @@
   display: flex;
   justify-content: center;
 }
+
+
 
 </style>
 <body>
@@ -69,21 +76,51 @@
     console.log(recentlogjson)
     for(i=0;i<recentlogjson.length;i++){
         var a = document.createElement("div");
-        
-        a.classList.add("fa")
-        a.classList.add("fa-trash")
-        a.classList.add("spaced") 
+        a.classList.add("fa");
+        a.classList.add("fa-trash");
+        a.classList.add("spaced")
+        a.classList.add("hover")
+
+  
+
+        a.addEventListener("click",(e)=>{
+            //delete the record and go on from there.....for now.....
+            
+            console.log("delete")
+            console.log(e.target.innerText)
+           var string= e.target.innerText.split('\n');
+           var id= string[0]
+           console.log(id)
+           ///make a post request...
+           var form = document.createElement('form');
+           //make a form document. 
+           form.setAttribute("method", "POST");
+            form.setAttribute("action", "/deleteuserlog");
+            form.setAttribute("id", "deletelog");
+            var FN = document.createElement("input");
+            FN.setAttribute("type", "text");
+            FN.setAttribute("name", "log_id");
+            FN.value=id
+            form.appendChild(FN); 
+            document.body.append(form)
+            var ii= document.getElementById("deletelog")
+            ii.submit();
+            
+
+           
+        })
+        ///////////////////////////// 
         a.innerHTML= 
         `<br>
-        
-        ${recentlogjson[i]._id}<br>
+        <div>
+        <div class="noshow">${recentlogjson[i]._id}</div>  <br>
        ${recentlogjson[i].Duration} <br>
        ${recentlogjson[i].activitydes} <br>
        ${recentlogjson[i].activitygen} <br>
         ${recentlogjson[i].fulldate} <br>
         ${recentlogjson[i].outcomegen} <br>
         ${recentlogjson[i].resident} <br>
-        
+        </div>
         <br>
         
         `

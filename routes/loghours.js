@@ -75,6 +75,7 @@ router.post('/protected-route',isAuth,(req,res,next)=>{
         
 
     }
+    
     let year_form = datetransform(req.body.date,0)
     let month_form = datetransform(req.body.date,1)
     let day_form = datetransform(req.body.date,2)
@@ -85,6 +86,7 @@ router.post('/protected-route',isAuth,(req,res,next)=>{
         outcomedes: req.body.outcome_description,
         resident:req.body.residentname,
         Duration:req.body.Duration,
+        starttime:req.body.starttime,
         
         year:year_form,
         month:month_form,
@@ -92,7 +94,7 @@ router.post('/protected-route',isAuth,(req,res,next)=>{
         fulldate:req.body.date,
         personresponsible:req.body.Personresponsible,
         _id:activityid,
-        resident_id:req.body.residentid
+        resident_id:req.body.residentid.split(",")
     });
 
     newUser.save()

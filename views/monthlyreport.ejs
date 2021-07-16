@@ -40,9 +40,9 @@
     <h4>   Year: <%= y %> </h4>
     <h5>  Month: <%= month %>  </h3>
 
-        <h6><%= active %>  </h6>
-        <h7><%= passive %> </h7>
-        <h8><%= badhours %> </h8>
+        <h6 id="6"><%= active %>  </h6>
+        <h7 id="7"><%= passive %> </h7>
+        <h8 id="8"><%= badhours %> </h8>
         
 
         
@@ -59,6 +59,24 @@
     <a download="monthlyreport.xls" href="#" onclick="return ExcellentExport.excel(this, 'mytable', `Monthly Gold Soul Report Month`);">Export to Excel</a>
     <table id="mytable" class="styled-table">
         <!-- here goes our data! -->
+        <tr>
+            <th>Year:<%= y %></th>
+            <th>Month:<%= month %></th>
+            <th>Name:<%= name %> </th>
+            
+        <tr>
+            <th>Active engagment hours</th>
+            <th>Passive engagement hours</th>
+            <th>Disengagement</th>
+            <th>others</th>
+        </tr>
+        <tr>
+            <th><%= active/60 %> </th>
+            <th><%= passive/60 %> </th>
+            <th><%= badhours/60 %> </th>
+            
+        </tr>
+        
 
     </table>
   
@@ -66,6 +84,11 @@
 </body>
 
 <script>
+
+    var goodhours = document.getElementById("h6")
+    var badhours = document.getElementById("h7")
+    var others = document.getElementById("h8")
+    console.log(goodhours)
     function logout(){
         document.location.href = "/logout"
     }
@@ -75,9 +98,10 @@
     var csv= document.getElementById('csv')
     var header= document.getElementById('header')
     var maincontent= document.getElementById('maincontent')
-    console.log(csv )
+    
 
-   
+
+ 
 
     
     
@@ -87,6 +111,8 @@
    
     var newheader =JSON.parse(`${header.innerText}`);
     var newcontent =JSON.parse(`${maincontent.innerText}`);
+    
+
   
     var table = document.getElementById("mytable")
     var header = document.createElement('tr')
@@ -99,7 +125,7 @@
     }
     
     table.append(header)
-    console.log(newcontent.length)
+ 
     //append all the rows first
     for (i=0;i<newcontent.length;i++){
         var a = document.createElement('tr')
@@ -108,9 +134,12 @@
             var b = document.createElement('th')
            
             b.innerText= JSON.stringify(newcontent[i][j])
+            
+           
             var cc= newcontent[i][j]
 
-            if(b.innerText=="null"){
+            if(b.innerText=="{}"){
+                console.log("hi")
                 
                 b.innerText="_"
                 b.classList.add("contentempty")
@@ -124,7 +153,9 @@
 
             }
             else{
+                //make sure have to process this part....
                 b.classList.add("contentmod")
+                
                 a.append(b)
                 
             }
@@ -133,7 +164,7 @@
 
          
 
-            
+           
 
            
 
@@ -150,97 +181,157 @@
     // after the table wait for a couple seconds:
     var oldmodlist= document.getElementsByClassName("contentmod")
     console.log(oldmodlist)
+    
+    
     var collectionlist=[]
     for (item of oldmodlist) {
         collectionlist.push(item
         )
         }
-        console.log(collectionlist)
+        
+        //maybe convert it back to array?
+       
         newcollectionlist=[]
 
         for(i=0;i<collectionlist.length;i++){
+            //here need to modify............
+            //if it is an object....do something
+            //have to differentiate between object and array.....
+           
             newcollectionlist.push( JSON.parse(`${collectionlist[i].innerText}`))
 
+
         }
-        console.log(newcollectionlist)
+
+      
+        //now for this newcollection list, identify whether it is a nested object or not , if yers then do different things...
+
+console.log(newcollectionlist)
 
     
         for(i=0;i<oldmodlist.length;i++){
-            console.log(item.index)
+           
             a= document.createElement("div")
+            var contenttobeset=""
 
-            if(newcollectionlist[i].outcomegen=="active engagement"){
+            if(newcollectionlist[i].activitygen==undefined){
                 //set color to green ;
-                oldmodlist[i].classList.add("green")
-            }
-            if(newcollectionlist[i].outcomegen=="pasive engagement"){
-                //set color to green ;
-                oldmodlist[i].classList.add("orange")
-            }
-            if(newcollectionlist[i].outcomegen=="nil"){
-                //set color to green ;
-                oldmodlist[i].classList.add("red")
-            }
+                //mean it is nested 
+                console.log("nested")
+               
+                var valueofobj= Object.values(newcollectionlist[i]);
+                var noofnestedobjs= valueofobj.length
+                console.log(valueofobj)
+                //below value is the data i need 
+                console.log(valueofobj[0])
+                
+
+                function generatecontent(allcontent){
+                    var domfinal=[]
+                    for(j=0;j<allcontent.length;j++){
+                        var entry = 
+                        `
+                        <div class="accordion">
+                        <br>
+                        <div>Activity Genre :<br> ${allcontent[j].activitygen}</div>
+                        
+                        <div>Outcome Genre:<br> ${allcontent[j].outcomegen}</div>
+                        
+                        <br>
+                        </div>
+                        <div class="panel">
+                        <div>--------------------</div>
+                        <div>Duration:${allcontent[j].Duration}</div>
+                        <div>Activity Description : ${allcontent[j].des}</div>
+                        
+                        <div>Outcome Description: ${allcontent[j].outcomedes}</div>
+                        <div>--------------------</div>
+
+                        </div>
+                        
+
+                        
+                        `
+                        domfinal.push(entry)
+
+                    }
+                    return domfinal.join('')
+                   
+                
 
 
-            //////////////////////////////
+                }
+                
 
-            a.innerHTML=
+                    console.log(generatecontent(valueofobj))
+                    
+
+                    contenttobeset= generatecontent(valueofobj)
+                    
+            
+                
+                //need to figure out ho man nested obejts
+            }
+            else{
+                //meaning it is defined and it is not nested 
+                 a.innerHTML=
             ` 
             
             <div class="accordion">
-
-                <strong> <p> Activity Genre:<br> ${newcollectionlist[i].activitygen}</p></strong><br>
-
-                <strong> <p>Outcome Genre:<br>${newcollectionlist[i].outcomegen}</p></strong><br>
-
+                <strong> <p> Activity Genre:<br> ${newcollectionlist[i].activitygen}</p></strong>
+                <strong> <p>Outcome Genre:<br>${newcollectionlist[i].outcomegen}</p></strong>
                
                 
                 
                 
             </div>
           
-
-
              <div class="panel">
-                <strong> <p>Duration:<br>${newcollectionlist[i].Duration}</p></strong><br>
-
+                <strong> <p>Duration:<br>${newcollectionlist[i].Duration}</p></strong>
             <p>Activity Description:<br> ${newcollectionlist[i].activitydes}</p>
                        
             <p>Outcome description:${newcollectionlist[i].outcomedes}</p>
                 
             </div>
-            
-            
-                        
+
             `
             
+            contenttobeset=a.innerHTML
+               
+               
+            
 
-          
-            oldmodlist[i].innerHTML= a.innerHTML
+            }
 
+            //////
+           
+            oldmodlist[i].innerHTML= contenttobeset
 
-        }
-
-        //get accordian 
-        var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  });
-}
            
             
-        
-        
+
+
+    }
+            //have to populat it here below....
+
+             //get accordian 
+        var acc = document.getElementsByClassName("accordion");
+        console.log(acc)
+                var i;
+                for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                    } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                    }
+                });
+                }
+
+
+            //////////////////////////////
 
         
 

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js" integrity="sha256-GMN9UIJeUeOsn/Uq4xDheGItEeSpI5Hcfp/63GclDZk=" crossorigin="anonymous"></script>
+<style>
+    .graphcontainer{
+        width: 40%;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr ;
+
+    }
+    .emphasis{
+        font: bolder;
+    }
+    @media print{
+        body {-webkit-print-color-adjust: exact;}
+
+    }
+    .nodisplay {
+        display:none;
+    }
+    
+
+</style>
+<body>
+
+    <div class="nodisplay" id="id"><%= data %> </div>
+    <nav>
+        <form action="">
+            resident: 
+            <input type="text" name="residentid">
+            Month:
+            <input type="number" name="month">
+            Year
+            <input type="number" year="year">
+            <button type="submit">Submit</button>
+        </form>
+    </nav>
+    <div >This is <%= name %> resident profile </div>
+    <div id="intro">This resident was enegaged in the following activities<%= actilist %> <br>
+    For more in indepth analysis of each activity for this resident, please refer to the section below.
+    </div>
+    
+    
+</body>
+<script>
+var data = document.getElementById("id");
+var activitylist= JSON.parse(data.innerText)
+console.log(activitylist)
+///[listofdays,listoftime,listofactivehours,listofpassivehours,listofdisengaged])
+var dataforchartsmaster=[]
+var standarddaylist=[1,2,3,4,5,6,0]
+var standardtimelist=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]
+
+var dolist= activitylist.map(x=>x.activitytime)
+var intro = document.getElementById("intro");
+
+for (i=0;i<activitylist.length;i++){
+    var entry= document.createElement("div");
+
+    var daylist= activitylist[i].timestats[0];
+    var timelist =activitylist[i].timestats[1]
+    var activehours=  activitylist[i].timestats[2].reduce((a, b) => a + b, 0)/60
+    var passivehours= activitylist[i].timestats[3].reduce((a, b) => a + b, 0)/60
+    var disenagegd= activitylist[i].timestats[4].reduce((a, b) => a + b, 0)/60
+    var activityefficacyindex=""
+    var signs=""
+    
+    if(disenagegd==0 && passivehours==0){
+        activityefficacyindex=`There activity is very suitable for this resident, the number of meaningful engagement is ${activehours} `
+        //set to green 
+        signs="hsl(143,34%,80%)"
+    }
+    else if(passivehours||disenagegd==0){
+        var negative = passivehours+disenagegd;
+        var diff= activehours-negative;
+        
+        if(diff>0||diff==0){
+            activityefficacyindex=`There activity might still be suitable but please revaluate this activity for this resident , the number of meaningful engagement is ${activehours} `
+            signs="hsl(48,97%,82%)"
+        }
+        else{
+            activityefficacyindex=`There activity might not be suitable but please revaluate this activity for this resident , the number of meaningful engagement is ${activehours} `
+            signs="hsl(0,100%,90%)"
+        }
+        
+
+    }
+
+    var daycompareoutcome=[]
+    var timecompareoutcome=[]
+    for(j=0;j<standarddaylist.length;j++){
+        
+        const result = daylist.filter(day => day== standarddaylist[j]);
+        daycompareoutcome.push(result.length)
+
+    }
+    for(k=0;k<standardtimelist.length;k++){
+        
+        const timeresult = timelist.filter(time => time== standardtimelist[k]);
+        timecompareoutcome.push(timeresult.length)
+
+    }
+    var compositeoutcome = []
+    compositeoutcome.push(daycompareoutcome,timecompareoutcome)
+    dataforchartsmaster.push(compositeoutcome)
+   
+  
+    entry.innerHTML=
+    `
+    <div class="emphasis">Activity Genre:<br>${activitylist[i].activitytime}</div><br>
+    <div  class="emphasis">No of active engagement:<br>${activehours}</div><br>
+    <div  class="emphasis">No of passive engagement:<br>${passivehours}</div><br>
+    <div> disengagement/others:<br>${disenagegd}</div><br>
+    <div> Insight and Recommendation:<br>${activityefficacyindex}</div><br>
+    <div>How the resident respond to this activity:<br>${activitylist[i].outcomedescription}</div><br>
+    <div>Examples of activity details:<br>${activitylist[i].actualstuff}</div>
+   
+    <div class="graphcontainer">
+    <canvas class="graph" id="${activitylist[i].activitytime}" width="100" height="50"></canvas>
+    <canvas class="graph" id="${activitylist[i].activitytime}time" width="100" height="50"></canvas>
+    </div>  
+    `
+    
+    entry.style.backgroundColor=signs
+    
+
+    
+    //now draw the graph 
+
+    document.body.append(entry)
+   
+}
+
+
+var grahs= document.getElementsByClassName("graph")
+
+
+var arr = Array.from(grahs);
+
+
+
+
+
+
+    for(i=0;i<activitylist.length;i++){
+        console.log(activitylist[i].activitytime)
+
+var ctx = document.getElementById(`${activitylist[i].activitytime}`)
+var ctx1 = document.getElementById(`${activitylist[i].activitytime}time`)
+var daydata = dataforchartsmaster[i][0]
+var timedata =dataforchartsmaster[i][1]
+console.log(daydata)
+
+var myChart = new Chart(ctx, {
+type: 'bar',
+data: {
+    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thusday', 'Friday', 'Saturday','Sunday'],
+    datasets: [{
+        label:"Day of visits",
+        data: daydata,
+        backgroundColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderColor: [
+            
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+}
+});
+
+
+var myChart2 = new Chart(ctx1, {
+type: 'bar',
+data: {
+    labels: ['12am', '1am', '2am', '3am', '4am', '5am','6am','7am','8am','9am','10am','11am','12pm','1pm','2pm','3pm','4pm','5pm','6pm','7pm','8pm','9pm','10pm','11pm'],
+    datasets: [{
+        label:"Time of visits",
+        data: timedata,
+        backgroundColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+        ],
+        borderColor: [
+           
+        ],
+        borderWidth: 1
+    }]
+},
+options: {
+    scales: {
+        y: {
+            beginAtZero: true
+        }
+    }
+}
+});
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

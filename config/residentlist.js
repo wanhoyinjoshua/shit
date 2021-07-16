@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
     residentcompany:String,
     interest: String,
     avoid: String,
+    organization:String
 
    
 });

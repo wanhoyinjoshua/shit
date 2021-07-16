@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <%- include ('partials/logout') -%><br><br>
+    Below is a list of exsiting residents:<br>
+    Try to use CLT + F to search to double check whether your resident exist.<br><br><br>
+    <%= data1 %> <br><br><br>
+
+    submit the form below to add the resident 
+    <form autocomplete="off" method="POST" action="/addresident">
+        What is the resident's name? (e.g john ross(milano first floor))<br>
+        <input name ="residentname"type="text" required><br>
+        What facility do they belong to?(if applicable)<br>
+        <select name="residentfacility" id="cars">
+            <option value="toscana">Toscana</option>
+            <option value="serentto">Serentto</option>
+            <option value="milanofirst">Milano first</option>
+            <option value="milanosecond">Milano Second</option>
+          </select><br>
+        Which organization?<br>
+        <select name="residentorganization" id="cars">
+            <option value="scalabrinibexley">Scalabrini</option>
+            <option value="others">others</option>
+           
+          </select><br>
+
+        <button type="submit">Add resident </button>
+        
+
+
+    </form>
+</body>
+</html>
