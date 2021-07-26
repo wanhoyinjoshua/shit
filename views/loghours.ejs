@@ -8,15 +8,34 @@
     <link rel="stylesheet" type="text/css" href="css/dropdown.css" />
 </head>
 <script src="https://use.fontawesome.com/8fa1c275e2.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-<body>
+<body class="px-5 py-3">
+  <nav>
 
-  <%- include ('partials/logout') -%>
+    <%- include ('partials/logout') -%>
 
-  <button id="admin" onclick="admin()">Admin-related</button>
-  <button onclick="loggroup()">More than 1 resident</button>
-  
-  <button onclick="individuallog()"> 1 resident</button><br>
+  </nav>
+  <br>
+
+
+  <ul class="nav">
+  <li class="nav-item">
+    
+    <button class="btn btn-outline-primary px-5" id="admin" onclick="admin()">Admin-related</button>
+  </li>
+  <li class="nav-item">
+    
+    <button  class="btn btn-outline-primary px-5" onclick="loggroup()">More than 1 resident</button>
+  </li>
+  <li class="nav-item">
+    <button class="btn btn-outline-primary px-5" onclick="individuallog()"> 1 resident</button><br>
+  </li>
+ 
+</ul>
+
+   
   
   <br>
 
@@ -25,41 +44,57 @@
     log your hours
     <%- include ('partials/groupresidentform') -%>
     <%- include ('partials/adminform') -%>
-    <form id ="loghourform"autocomplete="off" method="POST" action="/protected-route">
+    <form  id ="loghourform"autocomplete="off" method="POST" action="/protected-route">
 
      
-
+      <div class="form-group">
         <p id="residentword">Resident</p>:<br>
         
         <div class="autocomplete" style="width:300px;">
           <input id="myInput" type="text" name="residentname" placeholder="ResidentName" required />
         </div>
+      </div>
         <br>
+        <div class="form-group">
         <label for="activity_genre">Activity_Genre:</label>
         <select id="cars" name="activity_genre" required="required">
           <%- include ('partials/activitygenre') -%>
         </select>
+        </div>
         <br>
-        Activity Description:<br>
-        <input type="text" name="activity_description" required>
+        <div class="form-group">
+        <label for="exampleFormControlTextarea1">Activity Description</label>
+        <textarea class="form-control" name="activity_description" required id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
         <br>
+        <div class="form-group">
         <label for="outcome_genre">Outcome_Genre:</label>
         <select id="cars" name="outcome_genre" required>
          
           <%- include ('partials/outcomegenre') -%>
         
         </select>
+        </div>
         <br>
-        Outcome Description<br>
-        <input type="text" name="outcome_description" required><br>
+        
+        <div class="form-group">
+        <label for="exampleFormControlTextarea2">Outcome Description</label>
+        <textarea class="form-control" name="outcome_description" required id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
         <br>
+        <div class="form-group">
         Duration(in minutes)<br>
         <input type="number" name="Duration" required><br>
+        </div>
+        <div class="form-group">
       Roughly at what time did you start?(in 24 hour format, e.g 2pm is 14, 9am is 9 )<br>
         <input type="number" name="starttime" required>
+        </div>
         <br>
+        <div class="form-group">
         Date<br>
         <input type="date" name="date" required><br>
+        </div>
         <br>
  
         <input class="nodisplay" type="text" value=<%= user._id %> name="Personresponsible" required><br>

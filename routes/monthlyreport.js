@@ -57,7 +57,8 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[m]},year:{$a
         //then generte the row...
         var activehours=0
         var passivehours=0
-        var badoutcome=0
+        var declined=0
+        var others=0
 
 
         for (i=0;i<data.length;i++){
@@ -73,8 +74,15 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[m]},year:{$a
                 passivehours+=data[i].Duration;
 
             }
-            else if(data[i].outcomegen=='nil'){
-                badoutcome+=data[i].Duration
+            if(data[i].outcomegen=='declined'){
+
+                declined+=1;
+
+            }
+            if(data[i].outcomegen=='others'){
+
+                others+=data[i].Duration;
+
             }
             
            
@@ -205,7 +213,7 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[m]},year:{$a
   
 
 
-        res.render("monthlyreport",{name:req.user.username,csv:csvFromArrayOfArrays,bodyoftable:JSON.stringify(maincontent),header:JSON.stringify(uniqueresident),month:m,y:y,active:activehours,passive:passivehours,badhours:badoutcome})
+        res.render("monthlyreport",{name:req.user.username,csv:csvFromArrayOfArrays,bodyoftable:JSON.stringify(maincontent),header:JSON.stringify(uniqueresident),month:m,y:y,active:activehours,passive:passivehours,decline:declined,other:others})
 
 
         
@@ -256,7 +264,8 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
         //calculate hours 
         var activehours=0
         var passivehours=0
-        var badoutcome=0
+        var declined=0
+        var others=0
 
         console.log(data)
 
@@ -274,8 +283,15 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
                 passivehours+=data[i].Duration;
 
             }
-            else{
-                badoutcome+=data[i].Duration
+            if(data[i].outcomegen=='declined'){
+
+                declined+=1;
+
+            }
+            if(data[i].outcomegen=='others'){
+
+                others+=data[i].Duration;
+
             }
             
            
@@ -407,7 +423,7 @@ Useractivity.find({personresponsible:`${req.user._id}`,month:{$all:[req.body.mon
           console.log(JSON.stringify(maincontent))
           //how can the browser read this...
 
-        res.render("monthlyreport",{name:req.user.username,csv:csvFromArrayOfArrays,bodyoftable:JSON.stringify(maincontent),header:JSON.stringify(uniqueresident),month:req.body.month,y:req.body.year,active:activehours,passive:passivehours,badhours:badoutcome})
+        res.render("monthlyreport",{name:req.user.username,csv:csvFromArrayOfArrays,bodyoftable:JSON.stringify(maincontent),header:JSON.stringify(uniqueresident),month:req.body.month,y:req.body.year,active:activehours,passive:passivehours,decline:declined,other:others})
 
 
         
